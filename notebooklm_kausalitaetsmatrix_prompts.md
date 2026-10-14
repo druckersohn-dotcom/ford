@@ -1,186 +1,249 @@
-# Kausalitätsmatrix § 612a BGB: Prompt-Kette für NotebookLM
+# Kausalitätsmatrix § 612a BGB und Überarbeitung des Zieldokuments: Prompt-Kette für NotebookLM
 
 Verfahren Matt ./. octeo MULTISERVICES GmbH, ArbG Duisburg, 4 Ca 1222/26.
+
+Zweck der Kette: Das Dokument "Matt octeo schreiben und akte 4ca1222 26" (im Folgenden: ZIELDOKUMENT) wird verbessert. Jede Behauptung darin bekommt einen Beleg aus dem Zieldokument selbst oder aus einer anderen Quelle des Notebooks. Die Kausalitätsmatrix ist das Werkzeug dafür, nicht das Endprodukt.
 
 ## Anleitung
 
 Voraussetzungen vor Prompt 1:
 - Chat-Konfiguration v3 ist aktiv.
-- Alle Quellen im Notebook sind angehakt. Prüfe das vor jedem Prompt, NotebookLM merkt sich Abwahlen.
-- Quellen, die nur als Bild oder Scan ohne Textebene vorliegen, vorher durch eine Textfassung ersetzen oder ergänzen. Sonst sieht NotebookLM sie nicht.
+- Alle Quellen im Notebook sind angehakt. Vor jedem Prompt prüfen, NotebookLM merkt sich Abwahlen.
+- Das Zieldokument liegt als eigene Quelle vor. Enthält es eingebettete Anlagen (Bilder, Scans), müssen diese eine Textebene haben, sonst sieht NotebookLM sie nicht.
+- Weicht der Quellenname im Notebook von "Matt octeo schreiben und akte 4ca1222 26" ab, den Namen in allen Prompts im Block ZIELDOKUMENT anpassen.
 
 Reihenfolge:
 1. Prompt 1 im Chat. Antwort als Notiz speichern, Titel: "INVENTAR".
 2. Prompt 2 im Chat. Antwort als Notiz speichern, Titel: "EREIGNISSE". Bricht die Antwort ab: "Setze bei Tabelle [Buchstabe] Zeile [Nr] fort, keine Wiederholung." senden.
 3. Notizen INVENTAR und EREIGNISSE über "In Quelle umwandeln" zu Quellen machen.
-4. Prompt 3 als eigener Bericht im Studio (Variante 3a). Fehlen im Bericht Fundstellen oder Quellenzitate, stattdessen Variante 3b im Chat. Ergebnis als Notiz "MATRIX" speichern und ebenfalls in eine Quelle umwandeln.
-5. Prompt 4 im Chat.
-6. Nach jeder Lückenschließung (neue Anlage im Notebook) nur Prompt 4 erneut senden.
+4. Prompt 3 als eigener Bericht im Studio (Variante 3a). Fehlen im Bericht Fundstellen, stattdessen Variante 3b im Chat. Ergebnis als Notiz "MATRIX" speichern und in eine Quelle umwandeln.
+5. Prompt 4 im Chat. Ergebnis als Notiz "LÜCKEN" speichern und in eine Quelle umwandeln.
+6. Prompt 5 im Chat, abschnittsweise. Ergebnis ist die überarbeitete Fassung des Zieldokuments für den Anwalt.
+7. Nach jeder neuen Anlage im Notebook: Prompt 4 und Prompt 5 erneut.
 
 Jeder Prompt liegt unter 10.000 Zeichen.
+
+Block ZIELDOKUMENT (steht in jedem Prompt, muss unverändert bleiben):
+
+ZIELDOKUMENT: Die Quelle mit dem Namen "Matt octeo schreiben und akte 4ca1222 26" oder dem am nächsten liegenden Namen; es ist die Quelle, die das Schreiben des Klägers an octeo und die Aktenzusammenstellung zu 4 Ca 1222/26 enthält. Beginne die Antwort mit einer Zeile "ZIELDOKUMENT: [exakter Quellenname], [Seitenzahl] Seiten". Findest du keine passende Quelle, schreibe "ZIELDOKUMENT NICHT GEFUNDEN", nenne die drei Quellen mit der größten Ähnlichkeit und brich ab.
 
 ---
 
 ## PROMPT 1: INVENTAR
 
-Aufgabe: Inventar aller Quellen dieses Notebooks. Noch keine Bewertung, keine Zusammenfassung, keine Auslassung.
+ZIELDOKUMENT: Die Quelle mit dem Namen "Matt octeo schreiben und akte 4ca1222 26" oder dem am nächsten liegenden Namen; es ist die Quelle, die das Schreiben des Klägers an octeo und die Aktenzusammenstellung zu 4 Ca 1222/26 enthält. Beginne die Antwort mit einer Zeile "ZIELDOKUMENT: [exakter Quellenname], [Seitenzahl] Seiten". Findest du keine passende Quelle, schreibe "ZIELDOKUMENT NICHT GEFUNDEN", nenne die drei Quellen mit der größten Ähnlichkeit und brich ab.
 
-Gehe jede Quelle einzeln durch, in der Reihenfolge der Quellenliste. Enthält eine Quelle mehrere Dokumente (Anlagenkonvolut, E-Mail-Verlauf, mehrere Abrechnungen in einer Datei), bekommt jedes enthaltene Dokument eine eigene Zeile mit Unternummer (3.1, 3.2).
+Aufgabe: Inventar aller Quellen dieses Notebooks und Gliederung des Zieldokuments. Noch keine Bewertung, keine Zusammenfassung, keine Auslassung.
+
+TEIL 1: GLIEDERUNG DES ZIELDOKUMENTS
+Gehe das Zieldokument von der ersten bis zur letzten Seite durch. Tabelle, eine Zeile je Abschnitt oder enthaltenem Dokument:
+Nr | Seite von bis | Überschrift oder erste Zeile | Art (Schreiben, Sachverhaltsdarstellung, rechtliche Bewertung, Forderung, eingebettete Anlage, E-Mail, Protokoll, Abrechnung, Tabelle, sonstiges) | Datum | Enthaltene Tatsachenbehauptungen (Stichwort mit Datum) | Belegt innerhalb des Zieldokuments (Seite der Anlage) oder "kein Beleg im Dokument"
+
+Danach TABELLE Z: alle Tatsachenbehauptungen des Zieldokuments einzeln:
+Z-Nr | Seite | Behauptung (kurz, mit Datum) | Beleg im Zieldokument (Seite) oder "fehlt" | Beleg in anderer Quelle (Quellenname, Seite) oder "fehlt" | Status: BELEGT INTERN, BELEGT EXTERN, BELEGT BEIDES, UNBELEGT
+
+TEIL 2: ALLE QUELLEN
+Gehe jede Quelle einzeln durch, in der Reihenfolge der Quellenliste, das Zieldokument eingeschlossen. Enthält eine Quelle mehrere Dokumente (Anlagenkonvolut, E-Mail-Verlauf, mehrere Abrechnungen), bekommt jedes enthaltene Dokument eine eigene Zeile mit Unternummer (3.1, 3.2).
 
 Tabelle, eine Zeile je Dokument:
-Nr | Quellenname exakt wie im Notebook | Dokumentart (E-Mail, Brief, Fax, Protokoll, Gedächtnisprotokoll, Abrechnung, Stundenaufzeichnung, Systemprotokoll, Dienstplan, Vertrag, Tarifvertrag, Schriftsatz, Foto, sonstiges) | Aussteller/Absender | Empfänger | Datum des Dokuments | Zeitraum, den es betrifft | Vorgänge, die es belegt (Stichwort mit Datum, Fundstelle Seite) | Relevanz | Umfang (Seiten)
+Nr | Quellenname exakt wie im Notebook | Dokumentart | Aussteller/Absender | Empfänger | Datum | Zeitraum, den es betrifft | Vorgänge, die es belegt (Stichwort mit Datum, Seite) | Relevanz | Stützt welche Z-Nr aus Tabelle Z | Umfang (Seiten)
 
 Spalte Relevanz, Mehrfachnennung möglich:
 R = Rechtsausübung des Klägers (Lohn- oder Tarifforderung, Widerspruch, Gewerkschaftsbeitritt, Beschwerde nach §§ 84, 85 BetrVG, Anwaltsschreiben, Klage, Verweigerung einer Weisung, Auskunftsverlangen)
 M = Maßnahme von octeo gegen den Kläger (Entzug von Objekt, Stunden, Diensten, Schicht; Versetzung; Abmahnung; Kontrolle; Kündigung; Nichtzahlung)
-K = Kenntnis oder Entscheidung: belegt, wer bei octeo wann von einer Rechtsausübung wusste oder wer eine Maßnahme angeordnet hat
+K = Kenntnis oder Entscheidung: wer bei octeo wann von einer Rechtsausübung wusste oder eine Maßnahme anordnete
 G = Grund oder Entlastung: Stelle, die octeo als sachlichen Grund, Pflichtverstoß des Klägers oder vorbestehende Planung zitieren könnte
-V = Vergleichspersonen: Kollegen, deren Behandlung sich vergleichen lässt
+V = Vergleichspersonen
 E = Entgelt: Stundensatz, Stunden, Zulagen, Zuschläge, Abrechnung
-B = Betriebsrat: Beteiligung, Anhörung, Beschwerde
-0 = keine Relevanz für Kausalität
+B = Betriebsrat
+0 = keine Relevanz
 
-Nach der Tabelle:
-1. Gesamtzahl der Quellen im Notebook und Gesamtzahl der Zeilen. Weichen sie ab: Grund je Fall.
-2. Liste der Quellen, deren Inhalt nicht oder nur teilweise lesbar war (Scan ohne Text, Bild, abgeschnitten), mit Angabe, was fehlt.
-3. Liste der Dokumente ohne erkennbares Datum.
-4. Liste der Dokumente, in denen Namen von octeo-Mitarbeitern mit Funktion vorkommen: Name | Funktion | Quelle.
+Nach den Tabellen:
+1. Gesamtzahl der Quellen und der Zeilen. Abweichung: Grund je Fall.
+2. Quellen, die nicht oder nur teilweise lesbar waren (Scan ohne Text, Bild, abgeschnitten), mit Angabe, was fehlt; eingebettete Anlagen im Zieldokument gesondert.
+3. Dokumente ohne erkennbares Datum.
+4. Namen von octeo-Mitarbeitern mit Funktion: Name | Funktion | Quelle.
+5. Zählung aus Tabelle Z: wie viele Behauptungen BELEGT INTERN, BELEGT EXTERN, BELEGT BEIDES, UNBELEGT.
 
 Regeln:
-- Jede Zeile nur aus der Quelle selbst, nichts aus dem Chatverlauf oder aus Rechtswissen ergänzen.
+- Nur aus den Quellen, nichts aus dem Chatverlauf oder Rechtswissen ergänzen.
 - Keine Quelle als "ähnlich wie oben" zusammenfassen.
-- Unsichere Zuordnung mit [PRÜFEN] markieren statt zu raten.
-- Reicht die Antwortlänge nicht, Tabelle vollständig liefern und erst danach die Listen 1 bis 4; notfalls "FORTSETZUNG FOLGT" schreiben und auf Aufforderung fortsetzen.
+- Unsichere Zuordnung mit [PRÜFEN] markieren.
+- Reicht die Antwortlänge nicht: "FORTSETZUNG FOLGT" und auf Aufforderung fortsetzen.
 
-Selbsttest vor der Ausgabe: Steht jede Quelle des Notebooks in der Tabelle? Hat jede Zeile eine Fundstelle in der Spalte Vorgänge?
+Selbsttest: Steht jede Quelle in Teil 2? Hat jede Behauptung des Zieldokuments eine Z-Nr?
 
 ---
 
 ## PROMPT 2: EREIGNISEXTRAKTION
 
-Grundlage: Quelle INVENTAR sowie alle Originalquellen. Aufgabe: alle Ereignisse mit Bezug zu § 612a BGB in fünf Tabellen erfassen. Noch keine Kausalitätswertung; die kommt in einem späteren Schritt.
+ZIELDOKUMENT: Die Quelle mit dem Namen "Matt octeo schreiben und akte 4ca1222 26" oder dem am nächsten liegenden Namen; es ist die Quelle, die das Schreiben des Klägers an octeo und die Aktenzusammenstellung zu 4 Ca 1222/26 enthält. Beginne die Antwort mit einer Zeile "ZIELDOKUMENT: [exakter Quellenname], [Seitenzahl] Seiten". Findest du keine passende Quelle, schreibe "ZIELDOKUMENT NICHT GEFUNDEN", nenne die drei Quellen mit der größten Ähnlichkeit und brich ab.
 
-Vorgehen: Gehe das Inventar Zeile für Zeile durch. Jede Zeile mit Relevanz R, M, K, G, V oder B muss in mindestens einer der Tabellen A bis E mit Fundstelle auftauchen. Ein Vorgang, der in mehreren Quellen belegt ist, bekommt eine Zeile mit allen Fundstellen.
+Grundlage: Quelle INVENTAR, das Zieldokument und alle Originalquellen. Aufgabe: alle Ereignisse mit Bezug zu § 612a BGB in fünf Tabellen erfassen. Noch keine Kausalitätswertung.
+
+Vorgehen: Gehe das Inventar Zeile für Zeile durch. Jede Zeile mit Relevanz R, M, K, G, V oder B muss in mindestens einer der Tabellen A bis E mit Fundstelle auftauchen. Ein Vorgang, der in mehreren Quellen belegt ist, bekommt eine Zeile mit allen Fundstellen. Jede Zeile trägt zusätzlich die Spalte "Im Zieldokument": Seite, auf der das Zieldokument den Vorgang behauptet, plus Z-Nr aus INVENTAR, oder "fehlt im Zieldokument".
 
 TABELLE A: Rechtsausübungen des Klägers
-Nr | Datum | Handlung (wörtlich oder sinngemäß, kurz) | Form (mündlich, Brief, E-Mail, Fax, über Anwalt, Klage) | Adressat bei octeo (Name, Funktion) | Zugang oder Kenntnisnahme belegt durch (Quelle, Seite) | Weitere Personen bei octeo, die davon erfuhren (Name, Datum, Beleg) | Reaktion von octeo mit Datum und Beleg | Lücke
-
-Erfasse mindestens: Tarifforderung 07.11.2025, Gewerkschaftsbeitritt (und ob octeo davon wusste), Lohnwiderspruch 31.01.2026, Zahlungsaufforderung 23.02.2026, Fax 12.03.2026, Beschwerden nach §§ 84, 85 BetrVG, Klageerhebung, jede weitere in den Quellen belegte Geltendmachung, Verweigerung oder Beanstandung einer Weisung, Auskunftsverlangen.
+Nr | Datum | Handlung | Form (mündlich, Brief, E-Mail, Fax, über Anwalt, Klage) | Adressat bei octeo (Name, Funktion) | Zugang oder Kenntnisnahme belegt durch (Quelle, Seite) | Weitere Personen bei octeo, die davon erfuhren (Name, Datum, Beleg) | Reaktion von octeo mit Datum und Beleg | Im Zieldokument | Lücke
+Mindestens: Tarifforderung 07.11.2025, Gewerkschaftsbeitritt (und ob octeo davon wusste), Lohnwiderspruch 31.01.2026, Zahlungsaufforderung 23.02.2026, Fax 12.03.2026, Beschwerden nach §§ 84, 85 BetrVG, Klageerhebung, jede weitere belegte Geltendmachung, Verweigerung oder Beanstandung einer Weisung, Auskunftsverlangen.
 
 TABELLE B: Maßnahmen von octeo gegen den Kläger
-Nr | Datum der Anordnung | Datum des Zugangs beim Kläger | Datum des Wirksamwerdens | Maßnahme | Angeordnet durch (Name, Funktion) | Umgesetzt durch | Form (mündlich, E-Mail, Dienstplan, Brief) | Begründung von octeo, wörtlich aus der Quelle, oder "keine Begründung in den Quellen" | Erstmals dokumentiert am (Datum der frühesten Quelle, die die Maßnahme oder ihre Planung erwähnt) | Wirkung auf den Kläger (Stunden pro Monat, Zuschläge, Arbeitsort, Arbeitszeit, Entgelt in EUR, soweit in den Quellen) | Betriebsrat beteiligt (ja, nein, unbekannt; Beleg) | Quellen | Lücke
-
-Erfasse mindestens: Drohung vom 07.11.2025, Entzug Sporthalle Hitzestraße 06.02.2026, Versetzung des Arbeitsorts, Wechsel in die Spätschicht, Entzug der Wochenenddienste, Kürzung oder Verschiebung von Stunden, Nichtzahlung oder Kürzung von Entgelt, Abmahnungen, Arbeitsplatzinspektion 16./17.06.2026, Fotoaufnahmen, Beschattung oder GPS-Ortung, Vernichtung der Original-Stundenzettel, fristlose Kündigung 19.06.2026, Vorgänge nach der Kündigung (Zeugnis, Abrechnung, Herausgabe), jede weitere in den Quellen belegte Schlechterstellung.
+Nr | Datum der Anordnung | Zugang beim Kläger | Wirksamwerden | Maßnahme | Angeordnet durch (Name, Funktion) | Umgesetzt durch | Form | Begründung von octeo wörtlich aus der Quelle oder "keine Begründung in den Quellen" | Erstmals dokumentiert am (früheste Quelle, die die Maßnahme oder ihre Planung erwähnt) | Wirkung auf den Kläger (Stunden pro Monat, Zuschläge, Arbeitsort, Arbeitszeit, Entgelt in EUR) | Betriebsrat beteiligt (ja, nein, unbekannt; Beleg) | Quellen | Im Zieldokument | Lücke
+Mindestens: Drohung 07.11.2025, Entzug Sporthalle Hitzestraße 06.02.2026, Versetzung des Arbeitsorts, Wechsel in die Spätschicht, Entzug der Wochenenddienste, Kürzung oder Verschiebung von Stunden, Nichtzahlung oder Kürzung von Entgelt, Abmahnungen, Inspektion 16./17.06.2026, Fotoaufnahmen, Beschattung oder GPS-Ortung, Vernichtung der Original-Stundenzettel, fristlose Kündigung 19.06.2026, Vorgänge nach der Kündigung, jede weitere belegte Schlechterstellung.
 
 TABELLE C: Kenntnis- und Entscheiderkette
-Person bei octeo | Funktion | Wusste von welcher Rechtsausübung (Nr aus A) seit wann (Beleg) | Hat welche Maßnahme (Nr aus B) angeordnet oder umgesetzt (Beleg) | Äußerungen zum Motiv, wörtlich mit Quelle
+Person bei octeo | Funktion | Wusste von welcher Rechtsausübung (Nr aus A) seit wann (Beleg) | Hat welche Maßnahme (Nr aus B) angeordnet oder umgesetzt (Beleg) | Äußerungen zum Motiv, wörtlich mit Quelle | Im Zieldokument
 
 TABELLE D: Entlastungsstellen
-Jede Stelle in den Quellen, die octeo zu seinen Gunsten zitieren kann: Nr | Quelle, Seite | Inhalt wörtlich | Betrifft Maßnahme (Nr aus B) | Datum der Entstehung des Dokuments | Entstanden vor oder nach dem 31.01.2026 | Vor oder nach dem 07.11.2025 | Was octeo daraus machen wird (ein Satz)
-Hierzu zählen: Hinweise auf Auslastung, Belegungspläne, Umstrukturierung, Kundenwünsche, Pflichtverstöße oder Beanstandungen gegen den Kläger, Krankheitszeiten, frühere Versetzungen vor dem 07.11.2025, Vergleichsangebote, Äußerungen des Klägers, die gegen ihn verwendet werden können.
+Jede Stelle, die octeo zu seinen Gunsten zitieren kann, auch aus dem Zieldokument selbst: Nr | Quelle, Seite | Inhalt wörtlich | Betrifft Maßnahme (Nr aus B) | Entstehungsdatum des Dokuments | Vor oder nach dem 31.01.2026 | Vor oder nach dem 07.11.2025 | Was octeo daraus machen wird (ein Satz)
+Hierzu: Auslastung, Belegungspläne, Umstrukturierung, Kundenwünsche, Pflichtverstöße oder Beanstandungen gegen den Kläger, Krankheitszeiten, Versetzungen vor dem 07.11.2025, Vergleichsangebote, Äußerungen des Klägers, die gegen ihn verwendet werden können, überschießende oder unbelegte Formulierungen im Zieldokument.
 
 TABELLE E: Vergleichspersonen und bisherige Praxis
-Person oder Gruppe | Tätigkeit und Objekt | Was ihr zugewiesen, belassen oder entzogen wurde, mit Datum | Hat sie Ansprüche geltend gemacht (ja, nein, unbekannt) | Quelle | Bedeutung für den Vergleich (ein Satz)
+Person oder Gruppe | Tätigkeit und Objekt | Was ihr zugewiesen, belassen oder entzogen wurde, mit Datum | Hat sie Ansprüche geltend gemacht | Quelle | Bedeutung für den Vergleich (ein Satz) | Im Zieldokument
 Zusätzlich: bisherige Praxis gegenüber dem Kläger vor dem 07.11.2025 (Objekte, Schichten, Wochenenddienste, Stunden pro Monat) mit Quelle.
 
 Regeln:
-- Nur Quelleninhalt. Was nicht in den Quellen steht: [BELEG FEHLT] in der Spalte Lücke, mit Angabe, welches Dokument den Beleg liefern würde (zum Beispiel "Dienstplan KW 06/2026", "E-Mail der Weisung vom 06.02.2026", "Anhörung Betriebsrat § 102 BetrVG").
-- Daten immer als TT.MM.JJJJ. Unklares Datum: [DATUM] plus die Eingrenzung aus der Quelle.
+- Nur Quelleninhalt. Fehlendes: [BELEG FEHLT] in der Spalte Lücke, mit dem Dokument, das den Beleg liefern würde ("Dienstplan KW 06/2026", "Weisungs-E-Mail 06.02.2026", "Anhörung Betriebsrat § 102 BetrVG").
+- Daten als TT.MM.JJJJ; unklar: [DATUM] plus Eingrenzung.
 - Wörtliche Zitate in Anführungszeichen mit Seite.
 - Keine Zeile ohne Quelle.
-- Widersprechen sich Quellen (zwei Daten, zwei Stundenzahlen): beide Angaben mit Quelle nennen, Zeile mit [WIDERSPRUCH] markieren.
+- Widersprüche zwischen Quellen, auch zwischen Zieldokument und Anlage: beide Angaben nennen, [WIDERSPRUCH].
 
-Abschluss: Liste der Inventar-Zeilen mit Relevanz R, M, K, G, V oder B, die in keiner Tabelle vorkommen, mit Grund. Danach "FORTSETZUNG FOLGT", falls die Antwortlänge nicht gereicht hat.
+Abschluss: 1. Inventar-Zeilen mit Relevanz R, M, K, G, V oder B, die in keiner Tabelle vorkommen, mit Grund. 2. Vorgänge aus A bis E, die im Zieldokument fehlen, als Liste mit Nr. 3. Behauptungen des Zieldokuments (Z-Nr), zu denen die Tabellen keinen Beleg gefunden haben. Danach "FORTSETZUNG FOLGT", falls nötig.
 
 ---
 
 ## PROMPT 3a: KAUSALITÄTSMATRIX (Studio, eigener Bericht)
 
-Rolle: Juristischer Zuarbeiter auf Klägerseite im Verfahren Matt ./. octeo MULTISERVICES GmbH (ArbG Duisburg, 4 Ca 1222/26). Adressat ist der Anwalt des Klägers; der Bericht muss ohne Umschreiben in einen Schriftsatz übernommen werden können. Dritte Person ("der Kläger", "die Beklagte"), keine Anrede, kein Vorspann, kein Hinweis auf KI oder fehlende Rechtsberatung. Parteiisch in der Wertung, präzise in der Subsumtion. Schwache Punkte einmal benennen und als [SCHWACH] markieren.
+ZIELDOKUMENT: Die Quelle mit dem Namen "Matt octeo schreiben und akte 4ca1222 26" oder dem am nächsten liegenden Namen; es ist die Quelle, die das Schreiben des Klägers an octeo und die Aktenzusammenstellung zu 4 Ca 1222/26 enthält. Beginne den Bericht mit einer Zeile "ZIELDOKUMENT: [exakter Quellenname], [Seitenzahl] Seiten". Findest du keine passende Quelle, schreibe "ZIELDOKUMENT NICHT GEFUNDEN", nenne die drei Quellen mit der größten Ähnlichkeit und brich ab.
 
-Quellenregeln: Jede Tatsache ausschließlich aus den Quellen, mit Fundstelle (Quellenname, Seite). Grundlage sind vorrangig die Quellen INVENTAR und EREIGNISSE, gegengeprüft an den Originalquellen. Fehlt ein Beleg: [BELEG FEHLT] mit Angabe des fehlenden Dokuments. Nichts ergänzen, nichts glätten. Normen mit Absatz; Aktenzeichen nur, wenn sicher, sonst "(Az. prüfen)".
+Rolle: Juristischer Zuarbeiter auf Klägerseite im Verfahren Matt ./. octeo MULTISERVICES GmbH (ArbG Duisburg, 4 Ca 1222/26). Adressat ist der Anwalt des Klägers; der Bericht dient der Überarbeitung des Zieldokuments und muss ohne Umschreiben übernommen werden können. Dritte Person ("der Kläger", "die Beklagte"), keine Anrede, kein Vorspann, kein Hinweis auf KI oder fehlende Rechtsberatung. Parteiisch in der Wertung, präzise in der Subsumtion. Schwache Punkte einmal benennen, [SCHWACH].
 
-Rechtlicher Rahmen: § 612a BGB. Tatbestand: (1) zulässige Rechtsausübung, (2) Benachteiligung, (3) Kausalität; die Rechtsausübung muss tragender Beweggrund sein, ein bloßer äußerer Anlass genügt nicht (BAG 23.04.2009 – 6 AZR 189/08, Az. prüfen). Beweislast für alle drei Merkmale beim Kläger; keine Beweislastumkehr. Der Beweis wird über Indizien in der Gesamtwürdigung nach § 286 Abs. 1 ZPO geführt. Die Beklagte trifft die sekundäre Darlegungslast für ihre Motive (§ 138 Abs. 2 ZPO); nicht substanziiert Bestrittenes gilt als zugestanden (§ 138 Abs. 3 ZPO). Nie schreiben, die Beklagte müsse die fehlende Kausalität beweisen.
+Quellenregeln: Jede Tatsache ausschließlich aus den Quellen, mit Fundstelle (Quellenname, Seite). Grundlage sind INVENTAR und EREIGNISSE, gegengeprüft am Zieldokument und an den Originalquellen. Belege aus dem Zieldokument selbst und aus anderen Quellen gleichwertig verwenden, immer beide nennen, wenn beide vorhanden. Fehlt ein Beleg: [BELEG FEHLT] mit fehlendem Dokument. Nichts ergänzen, nichts glätten. Normen mit Absatz; Aktenzeichen nur, wenn sicher, sonst "(Az. prüfen)".
 
-Aufbau des Berichts:
+Rechtlicher Rahmen: § 612a BGB. Tatbestand: (1) zulässige Rechtsausübung, (2) Benachteiligung, (3) Kausalität; die Rechtsausübung muss tragender Beweggrund sein, ein bloßer äußerer Anlass genügt nicht (BAG 23.04.2009 – 6 AZR 189/08, Az. prüfen). Beweislast für alle drei Merkmale beim Kläger; keine Beweislastumkehr. Beweis über Indizien in der Gesamtwürdigung nach § 286 Abs. 1 ZPO. Die Beklagte trifft die sekundäre Darlegungslast für ihre Motive (§ 138 Abs. 2 ZPO); nicht substanziiert Bestrittenes gilt als zugestanden (§ 138 Abs. 3 ZPO). Nie schreiben, die Beklagte müsse die fehlende Kausalität beweisen.
+
+Aufbau:
 
 1. ÜBERSICHTSMATRIX
-Zeilen: alle Rechtsausübungen des Klägers (Tabelle A aus EREIGNISSE). Spalten: alle Maßnahmen der Beklagten (Tabelle B). Zelle: Abstand in Tagen von der Rechtsausübung bis zur Anordnung der Maßnahme, dahinter die Indizstärke: +++ stark, ++ mittel, + schwach, 0 kein Indiz, X zeitlich ausgeschlossen (Maßnahme liegt vor der Rechtsausübung oder vor der Kenntnis des Entscheiders). Jede Zelle ausfüllen, keine leer lassen.
+Zeilen: alle Rechtsausübungen (Tabelle A aus EREIGNISSE). Spalten: alle Maßnahmen (Tabelle B). Zelle: Abstand in Tagen von der Rechtsausübung bis zur Anordnung, dahinter Indizstärke: +++ stark, ++ mittel, + schwach, 0 kein Indiz, X zeitlich ausgeschlossen (Maßnahme vor der Rechtsausübung oder vor Kenntnis des Entscheiders). Keine Zelle leer.
 
 2. ZELLBLÄTTER
-Für jedes Paar mit Indizstärke + oder höher ein Block mit genau diesen Punkten:
-a) Abstand in Tagen; Datum der Rechtsausübung, Datum der Kenntnis des Entscheiders, Datum der Anordnung, je mit Fundstelle.
+Für jedes Paar ab Stärke + ein Block mit genau diesen Punkten:
+a) Abstand in Tagen; Datum der Rechtsausübung, der Kenntnis des Entscheiders, der Anordnung, je mit Fundstelle.
 b) Kenntnis: Kannte die anordnende Person die Rechtsausübung vor der Anordnung? Beleg oder [BELEG FEHLT].
-c) Sachlicher Grund: Gibt es in den Quellen einen Grund, der vor der Rechtsausübung dokumentiert ist? Ja mit Fundstelle und Datum, oder nein. Begründung der Beklagten in der Quelle wörtlich, oder "keine Begründung dokumentiert".
-d) Abweichung von der bisherigen Praxis und Vergleichspersonen (Tabelle E), mit Fundstelle.
-e) Muster: weitere Maßnahmen innerhalb von 30 Tagen nach derselben Rechtsausübung, Nr aus Tabelle B.
-f) Beteiligung des Betriebsrats: ja, nein, unbekannt; Beleg.
-g) Motivbelege: wörtliche Äußerungen der Beklagten, die auf das Motiv schließen lassen (Tabelle C).
-h) Entlastung: alles aus Tabelle D, das diese Zelle betrifft, mit Datum der Entstehung vor oder nach der Rechtsausübung, und Entgegnung in je einem Satz.
-i) Indizstärke mit Begründung in zwei Sätzen.
-j) Beweisantritte: Urkunde (Quellenname), Zeuge (Name, Funktion, Beweisthema), Parteivernehmung, Vorlageantrag nach § 142 ZPO (Dienstpläne, Belegungsplan, Systemprotokolle, Weisungs-E-Mail, Betriebsratsanhörung).
-k) Lücken: [BELEG FEHLT] mit Dokument, das die Lücke schließen würde.
+c) Sachlicher Grund: vor der Rechtsausübung dokumentiert? Ja mit Fundstelle und Datum, oder nein. Begründung der Beklagten wörtlich oder "keine Begründung dokumentiert".
+d) Abweichung von bisheriger Praxis und Vergleichspersonen (Tabelle E).
+e) Muster: weitere Maßnahmen binnen 30 Tagen nach derselben Rechtsausübung, Nr aus B.
+f) Betriebsrat beteiligt: ja, nein, unbekannt; Beleg.
+g) Motivbelege: wörtliche Äußerungen der Beklagten (Tabelle C).
+h) Entlastung: alles aus Tabelle D zu dieser Zelle, mit Entstehungsdatum und Entgegnung in je einem Satz.
+i) Indizstärke mit zwei Sätzen Begründung.
+j) Beweisantritte: Urkunde (Quellenname, bei Anlagen im Zieldokument dessen Seite), Zeuge (Name, Funktion, Beweisthema), Parteivernehmung, Vorlageantrag § 142 ZPO (Dienstpläne, Belegungsplan, Systemprotokolle, Weisungs-E-Mail, Betriebsratsanhörung).
+k) Im Zieldokument: Seite und Z-Nr, auf der das Zieldokument diese Verbindung bereits vorträgt, oder "fehlt"; was dort ergänzt, belegt oder gestrichen werden muss.
+l) Lücken: [BELEG FEHLT] mit Dokument.
 
 3. GESAMTWÜRDIGUNG
-Die Indizienkette in der Reihenfolge ihrer Stärke, als zusammenhängender Vortrag für den Schriftsatz. Formel: "Die Indizien tragen den Vollbeweis, solange die Beklagte keinen dokumentierten, vor dem 31.01.2026 angelegten sachlichen Grund darlegt." Getrennt für den Entzug der Sporthalle, die Folgemaßnahmen und die Kündigung vom 19.06.2026.
+Indizienkette in der Reihenfolge ihrer Stärke als Schriftsatzvortrag, getrennt für Sporthalle, Folgemaßnahmen, Kündigung 19.06.2026. Formel: "Die Indizien tragen den Vollbeweis, solange die Beklagte keinen dokumentierten, vor dem 31.01.2026 angelegten sachlichen Grund darlegt."
 
 4. DIE SCHWÄCHSTEN STELLEN
-Die drei Zellen, bei denen die Beklagte am ehesten einen sachlichen Grund belegen kann, mit [SCHWACH] und dem Dokument, das die Lage drehen würde.
+Die drei Zellen, bei denen die Beklagte am ehesten einen sachlichen Grund belegen kann, [SCHWACH], mit dem Dokument, das die Lage drehen würde.
 
 5. VORTRAG DER BEKLAGTEN AUS DENSELBEN QUELLEN
-Was die Beklagte aus den Quellen gegen den Kläger zitieren wird, je mit Fundstelle und Entgegnung.
+Mit Fundstelle und Entgegnung; Formulierungen des Zieldokuments, die die Beklagte gegen den Kläger wenden kann, gesondert.
 
-6. LÜCKENLISTE
-Alle [BELEG FEHLT] aus den Zellblättern, sortiert nach Wirkung auf die Kausalität, mit dem jeweils fehlenden Dokument und dem Weg, es zu beschaffen (Vorlageantrag § 142 ZPO, Auskunft, Zeuge, eigener Bestand des Klägers).
+6. ÄNDERUNGSBEDARF IM ZIELDOKUMENT
+Tabelle: Seite | Z-Nr | Jetziger Text (kurz) | Problem (unbelegt, falscher Beleg, zu scharf, zu schwach, fehlt ganz, Widerspruch zur Anlage) | Vorschlag (neuer Text oder einzufügender Beleg mit Quelle und Seite) | Betroffene Zelle der Matrix
 
-Stil: Tabellen für Matrix und Lückenliste. Zahlen statt Adjektive. Keine Hedging-Ketten, keine Floskeln. Jede Behauptung mit Fundstelle oder Marker.
+7. LÜCKENLISTE
+Alle [BELEG FEHLT], sortiert nach Wirkung auf die Kausalität, mit fehlendem Dokument und Beschaffungsweg (Vorlageantrag § 142 ZPO, Auskunft, Zeuge, eigener Bestand).
+
+Stil: Tabellen für Matrix, Änderungsbedarf und Lückenliste. Zahlen statt Adjektive. Keine Hedging-Ketten. Jede Behauptung mit Fundstelle oder Marker.
 
 ---
 
 ## PROMPT 3b: KAUSALITÄTSMATRIX (Chat, Fallback)
 
-Grundlage: Quellen INVENTAR und EREIGNISSE, gegengeprüft an den Originalquellen. Beweislast für § 612a BGB liegt vollständig beim Kläger; Indizien in der Gesamtwürdigung nach § 286 Abs. 1 ZPO, sekundäre Darlegungslast der Beklagten nach § 138 Abs. 2 ZPO. Keine Beweislastumkehr behaupten.
+ZIELDOKUMENT: Die Quelle mit dem Namen "Matt octeo schreiben und akte 4ca1222 26" oder dem am nächsten liegenden Namen; es ist die Quelle, die das Schreiben des Klägers an octeo und die Aktenzusammenstellung zu 4 Ca 1222/26 enthält. Beginne die Antwort mit einer Zeile "ZIELDOKUMENT: [exakter Quellenname], [Seitenzahl] Seiten". Findest du keine passende Quelle, schreibe "ZIELDOKUMENT NICHT GEFUNDEN", nenne die drei Quellen mit der größten Ähnlichkeit und brich ab.
 
-Liefere in dieser Reihenfolge, jeweils mit Fundstellen:
+Grundlage: INVENTAR und EREIGNISSE, gegengeprüft am Zieldokument und den Originalquellen. Belege aus dem Zieldokument und aus anderen Quellen gleichwertig, beide nennen, wenn vorhanden. Beweislast für § 612a BGB beim Kläger; Indizien in der Gesamtwürdigung nach § 286 Abs. 1 ZPO, sekundäre Darlegungslast der Beklagten nach § 138 Abs. 2 ZPO. Keine Beweislastumkehr behaupten.
+
+Liefere in dieser Reihenfolge, mit Fundstellen:
 
 1. ÜBERSICHTSMATRIX: Zeilen = Rechtsausübungen (Tabelle A), Spalten = Maßnahmen (Tabelle B). Zelle = Abstand in Tagen bis zur Anordnung plus Indizstärke (+++ stark, ++ mittel, + schwach, 0 keines, X zeitlich ausgeschlossen). Keine Zelle leer.
 
-2. ZELLBLÄTTER für jedes Paar ab Stärke +, je mit: a) Abstand in Tagen und drei Daten (Rechtsausübung, Kenntnis des Entscheiders, Anordnung); b) Kenntnis des Entscheiders mit Beleg; c) sachlicher Grund vor der Rechtsausübung dokumentiert: ja mit Fundstelle und Datum, oder nein; Begründung der Beklagten wörtlich oder "keine Begründung dokumentiert"; d) Abweichung von bisheriger Praxis und Vergleichspersonen; e) weitere Maßnahmen binnen 30 Tagen; f) Betriebsrat beteiligt; g) Motivbelege wörtlich; h) Entlastungsstellen aus Tabelle D mit Entstehungsdatum und Entgegnung; i) Indizstärke mit zwei Sätzen Begründung; j) Beweisantritte: Urkunde, Zeuge mit Beweisthema, Parteivernehmung, Vorlageantrag § 142 ZPO; k) Lücken als [BELEG FEHLT] mit fehlendem Dokument.
+2. ZELLBLÄTTER für jedes Paar ab Stärke +, je mit: a) Abstand in Tagen und drei Daten (Rechtsausübung, Kenntnis des Entscheiders, Anordnung); b) Kenntnis des Entscheiders mit Beleg; c) sachlicher Grund vor der Rechtsausübung dokumentiert: ja mit Fundstelle und Datum, oder nein; Begründung der Beklagten wörtlich oder "keine Begründung dokumentiert"; d) Abweichung von bisheriger Praxis und Vergleichspersonen; e) weitere Maßnahmen binnen 30 Tagen; f) Betriebsrat beteiligt; g) Motivbelege wörtlich; h) Entlastungsstellen aus Tabelle D mit Entstehungsdatum und Entgegnung; i) Indizstärke mit zwei Sätzen; j) Beweisantritte: Urkunde (bei Anlagen im Zieldokument dessen Seite), Zeuge mit Beweisthema, Parteivernehmung, Vorlageantrag § 142 ZPO; k) Im Zieldokument: Seite und Z-Nr oder "fehlt", und was dort zu ergänzen, zu belegen oder zu streichen ist; l) Lücken als [BELEG FEHLT] mit Dokument.
 
 3. GESAMTWÜRDIGUNG als Schriftsatzvortrag, getrennt für Sporthalle, Folgemaßnahmen, Kündigung. Formel: "Die Indizien tragen den Vollbeweis, solange die Beklagte keinen dokumentierten, vor dem 31.01.2026 angelegten sachlichen Grund darlegt."
 
 4. DIE DREI SCHWÄCHSTEN ZELLEN mit [SCHWACH] und dem Dokument, das die Lage drehen würde.
 
-5. VORTRAG DER BEKLAGTEN aus denselben Quellen, mit Fundstelle und Entgegnung.
+5. VORTRAG DER BEKLAGTEN aus denselben Quellen, mit Fundstelle und Entgegnung; Formulierungen des Zieldokuments, die sich gegen den Kläger wenden lassen, gesondert.
 
-6. LÜCKENLISTE, sortiert nach Wirkung auf die Kausalität, mit Beschaffungsweg.
+6. ÄNDERUNGSBEDARF IM ZIELDOKUMENT: Seite | Z-Nr | Jetziger Text | Problem (unbelegt, falscher Beleg, zu scharf, zu schwach, fehlt, Widerspruch zur Anlage) | Vorschlag mit Beleg (Quelle, Seite) | Zelle der Matrix.
 
-Antwort zu lang: erst Matrix und Zellblätter vollständig, dann "FORTSETZUNG FOLGT"; die Abschnitte 3 bis 6 auf Aufforderung.
+7. LÜCKENLISTE nach Wirkung auf die Kausalität, mit Beschaffungsweg.
+
+Antwort zu lang: erst 1 und 2 vollständig, dann "FORTSETZUNG FOLGT"; 3 bis 7 auf Aufforderung.
 
 ---
 
 ## PROMPT 4: VOLLSTÄNDIGKEITSKONTROLLE
 
-Grundlage: Quellen INVENTAR, EREIGNISSE, MATRIX und alle Originalquellen. Aufgabe: prüfen, ob die Matrix wirklich alles aus dem Notebook verwertet, und was fehlt.
+ZIELDOKUMENT: Die Quelle mit dem Namen "Matt octeo schreiben und akte 4ca1222 26" oder dem am nächsten liegenden Namen; es ist die Quelle, die das Schreiben des Klägers an octeo und die Aktenzusammenstellung zu 4 Ca 1222/26 enthält. Beginne die Antwort mit einer Zeile "ZIELDOKUMENT: [exakter Quellenname], [Seitenzahl] Seiten". Findest du keine passende Quelle, schreibe "ZIELDOKUMENT NICHT GEFUNDEN", nenne die drei Quellen mit der größten Ähnlichkeit und brich ab.
+
+Grundlage: INVENTAR, EREIGNISSE, MATRIX, das Zieldokument und alle Originalquellen. Aufgabe: prüfen, ob die Matrix alles aus dem Notebook verwertet und ob jede Behauptung des Zieldokuments einen Beleg hat.
 
 1. ABGLEICH QUELLE GEGEN MATRIX
-Tabelle: Nr aus INVENTAR | Quellenname | Relevanz laut Inventar | Zitiert in Zelle(n) der Matrix (Zeile/Spalte) oder "nicht zitiert" | Falls nicht zitiert: Grund (irrelevant, übersehen, nur Entgelt) | Was die Quelle zur Kausalität beitragen würde (ein Satz mit Fundstelle)
+Tabelle: Nr aus INVENTAR | Quellenname | Relevanz | Zitiert in Zelle(n) der Matrix oder "nicht zitiert" | Falls nicht zitiert: Grund (irrelevant, übersehen, nur Entgelt) | Beitrag zur Kausalität (ein Satz mit Fundstelle)
 Jede Quelle mit Relevanz R, M, K, G, V oder B, die "nicht zitiert" und nicht "irrelevant" ist, gilt als übersehen.
 
-2. NACHTRAG
-Für jede übersehene Quelle: Welche Zelle der Matrix ändert sich, in welche Richtung (stärker, schwächer), mit Fundstelle. Gegebenenfalls neue Zeile oder Spalte, falls die Quelle eine bisher nicht erfasste Rechtsausübung oder Maßnahme belegt.
+2. ABGLEICH ZIELDOKUMENT GEGEN QUELLEN
+Tabelle über alle Z-Nr aus INVENTAR: Z-Nr | Seite | Behauptung | Beleg im Zieldokument (Seite) | Beleg in anderer Quelle (Name, Seite) | Status (BELEGT INTERN, BELEGT EXTERN, BELEGT BEIDES, UNBELEGT) | Stimmt die Behauptung mit dem Beleg überein (ja, Abweichung mit Angabe) | Zelle der Matrix
+Danach: Vorgänge aus EREIGNISSE, die im Zieldokument fehlen, mit Angabe, in welchen Abschnitt sie gehören.
 
-3. WIDERSPRÜCHE
-Alle Stellen, an denen Quellen einander widersprechen (Daten, Stunden, Beträge, Namen, Reihenfolge): Quelle 1 mit Angabe | Quelle 2 mit Angabe | Betroffene Zelle | Welche Version für den Kläger günstiger ist und wie der Widerspruch aufzulösen ist.
+3. NACHTRAG
+Für jede übersehene Quelle: Welche Zelle ändert sich, in welche Richtung, mit Fundstelle. Neue Zeile oder Spalte, falls die Quelle eine nicht erfasste Rechtsausübung oder Maßnahme belegt.
 
-4. ERWARTBARE, ABER FEHLENDE DOKUMENTE
-Dokumente, die nach dem Ablauf existieren müssen, aber in keiner Quelle vorliegen. Prüfe mindestens: Weisung zum Entzug der Sporthalle in Textform; Dienst- und Belegungspläne vor und nach dem 06.02.2026; Zugangsnachweise für 31.01., 23.02. und 12.03.2026; Anhörung des Betriebsrats nach § 102 Abs. 1 BetrVG zur Kündigung; Beteiligung nach § 99 Abs. 1 BetrVG zu Versetzung und Schichtwechsel; Arbeitsvertrag mit Ausschlussklausel; Mitgliedsbestätigung IG BAU; Protokoll oder Vermerk zur Inspektion 16./17.06.2026; Kündigungsschreiben mit Begründung; Antworten von octeo auf die Geltendmachungen; Zeiterfassung von octeo für 01/2023 bis 06/2026.
-Tabelle: Dokument | Wer hat es (Kläger, Beklagte, Betriebsrat, Dritte) | Welche Zelle es betrifft | Beschaffungsweg (eigener Bestand, Vorlageantrag § 142 ZPO, Auskunft, Zeuge, Betriebsrat) | Priorität 1 bis 3 nach Wirkung auf die Kausalität
+4. WIDERSPRÜCHE
+Alle Stellen, an denen Quellen einander oder dem Zieldokument widersprechen (Daten, Stunden, Beträge, Namen, Reihenfolge): Quelle 1 mit Angabe | Quelle 2 mit Angabe | Zelle | Für den Kläger günstigere Version und Auflösung.
 
-5. RÜCKFRAGEN AN DEN ANWALT
-Nummerierte Liste. Nur Fragen, deren Antwort eine Zelle der Matrix verändert. Zu jeder Frage: betroffene Zelle und warum die Antwort entscheidet.
+5. ERWARTBARE, ABER FEHLENDE DOKUMENTE
+Prüfe mindestens: Weisung zum Entzug der Sporthalle in Textform; Dienst- und Belegungspläne vor und nach dem 06.02.2026; Zugangsnachweise für 31.01., 23.02., 12.03.2026; Anhörung des Betriebsrats nach § 102 Abs. 1 BetrVG; Beteiligung nach § 99 Abs. 1 BetrVG zu Versetzung und Schichtwechsel; Arbeitsvertrag mit Ausschlussklausel; Mitgliedsbestätigung IG BAU; Protokoll zur Inspektion 16./17.06.2026; Kündigungsschreiben mit Begründung; Antworten von octeo auf die Geltendmachungen; Zeiterfassung von octeo 01/2023 bis 06/2026.
+Tabelle: Dokument | Wer hat es (Kläger, Beklagte, Betriebsrat, Dritte) | Zelle | Z-Nr im Zieldokument, die davon abhängt | Beschaffungsweg (eigener Bestand, Vorlageantrag § 142 ZPO, Auskunft, Zeuge, Betriebsrat) | Priorität 1 bis 3
 
-6. TOP 5
-Die fünf Lücken, deren Schließung die Kausalitätskette am stärksten verbessert, mit einem Satz, was sich dann ändert.
+6. RÜCKFRAGEN AN DEN ANWALT
+Nummeriert. Nur Fragen, deren Antwort eine Zelle oder eine Z-Nr verändert, mit Angabe, welche.
+
+7. TOP 5
+Die fünf Lücken, deren Schließung die Kausalitätskette und das Zieldokument am stärksten verbessert, je ein Satz.
 
 Regeln: Nur Quelleninhalt, jede Aussage mit Fundstelle oder [BELEG FEHLT]. Keine Wiederholung der Matrix. Kein Vorspann.
+
+---
+
+## PROMPT 5: ÜBERARBEITUNG DES ZIELDOKUMENTS
+
+ZIELDOKUMENT: Die Quelle mit dem Namen "Matt octeo schreiben und akte 4ca1222 26" oder dem am nächsten liegenden Namen; es ist die Quelle, die das Schreiben des Klägers an octeo und die Aktenzusammenstellung zu 4 Ca 1222/26 enthält. Beginne die Antwort mit einer Zeile "ZIELDOKUMENT: [exakter Quellenname], [Seitenzahl] Seiten". Findest du keine passende Quelle, schreibe "ZIELDOKUMENT NICHT GEFUNDEN", nenne die drei Quellen mit der größten Ähnlichkeit und brich ab.
+
+Grundlage: das Zieldokument, INVENTAR (Tabelle Z), EREIGNISSE, MATRIX, LÜCKEN und alle Originalquellen. Aufgabe: das Zieldokument Abschnitt für Abschnitt so überarbeiten, dass der Anwalt es ohne Umschreiben verwenden kann. Jede Tatsachenbehauptung bekommt einen Beleg aus dem Zieldokument selbst (Seite) oder aus einer anderen Quelle (Name, Seite), oder den Marker [BELEG FEHLT] mit dem fehlenden Dokument.
+
+Arbeite Abschnitt für Abschnitt nach der Gliederung aus INVENTAR Teil 1. Liefere pro Abschnitt:
+
+A. ÜBERARBEITETER TEXT
+Vollständiger neuer Text des Abschnitts in Schriftsatzsprache, dritte Person ("der Kläger", "die Beklagte"). Nach jeder Tatsachenbehauptung in Klammern der Beleg: (Zieldokument S. x) oder (Quellenname, S. x) oder [BELEG FEHLT: Dokument]. Beweisantritte am Ende jedes Tatsachenblocks: "Beweis: Urkunde ..., Zeuge ..., Parteivernehmung, Vorlageantrag § 142 ZPO ...". Normen mit Absatz.
+
+B. ÄNDERUNGSPROTOKOLL
+Tabelle: Z-Nr | Alt (kurz) | Neu (kurz) | Art (Beleg ergänzt, Beleg korrigiert, Formulierung geschärft, Formulierung entschärft, gestrichen, neu aufgenommen) | Grund mit Fundstelle oder Zelle der Matrix
+Gestrichen wird nur, was unbelegt ist und bleiben würde, oder was der Beklagten nützt (Tabelle D). Geschärft wird nur, was die Quellen tragen. Entschärft wird, was die Quellen nicht tragen; [SCHWACH] bleibt sichtbar.
+
+C. NEU AUFGENOMMENE VORGÄNGE
+Vorgänge aus EREIGNISSE, die das Zieldokument bisher nicht enthielt und die in diesen Abschnitt gehören, mit Beleg.
+
+Reihenfolge der Abschnitte und Kausalitätsargument: Der Abschnitt zur Kausalität folgt der Indizienkette aus MATRIX, Abschnitt 3, mit der Formel "Die Indizien tragen den Vollbeweis, solange die Beklagte keinen dokumentierten, vor dem 31.01.2026 angelegten sachlichen Grund darlegt." Beweislast beim Kläger, sekundäre Darlegungslast der Beklagten (§ 138 Abs. 2 ZPO); keine Beweislastumkehr behaupten. Antizipierte Einwände der Beklagten aus MATRIX, Abschnitt 5, mit Entgegnung in den jeweiligen Abschnitt aufnehmen.
+
+Bezifferung: Jede Forderung als Tabelle (Monat | Stunden | gezahlt €/h | geschuldet €/h | Differenz €/h | Differenz € brutto | Geltendmachung/Frist) mit Fundstelle je Zahl; fehlende Zahl als [BETRAG] oder [Stunden p. M.].
+
+Regeln: Nur Quelleninhalt. Keine Floskeln, kein Vorspann, kein Hinweis auf KI. Zahlen statt Adjektive. Widersprüche zwischen Zieldokument und Anlage werden zugunsten der Anlage aufgelöst und im Änderungsprotokoll vermerkt.
+
+Umfang: Bearbeite in dieser Antwort nur Abschnitt 1 bis [Nr] der Gliederung. Schließe mit "NÄCHSTER ABSCHNITT: [Nr]". Auf "weiter" folgt der nächste Abschnitt ohne Wiederholung. Nach dem letzten Abschnitt: Gesamtliste aller [BELEG FEHLT] und aller [SCHWACH] mit Seite, als Rückfragenliste an den Anwalt.
